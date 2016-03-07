@@ -1,0 +1,4 @@
+---
+
+- name: restart bohr
+  service: name=bohr state=restarted

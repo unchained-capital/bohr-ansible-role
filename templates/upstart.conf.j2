@@ -1,0 +1,19 @@
+description "bohr"
+
+exec 2>&1
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+respawn
+respawn limit 10 5
+
+console log
+
+setuid {{ bohr_user }}
+setgid {{ bohr_group }}
+
+chdir {{ bohr_home_dir }}
+script
+  {{ bohr_bin_dir }}/bohr --config {{ bohr_conf_dir }}/bohr.yml --config {{ bohr_conf_dir }}/conf.d --loop >> {{ bohr_log_dir }}/bohr.log 2>&1
+end script  

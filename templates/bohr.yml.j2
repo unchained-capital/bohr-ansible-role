@@ -1,0 +1,9 @@
+---
+
+bohr:
+  journals:
+{% for journal in bohr_journals %}
+    - {{ journal }}
+{% endfor %}
+
+{{ bohr_config | to_nice_yaml }}

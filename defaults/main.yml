@@ -1,0 +1,20 @@
+---
+
+bohr_version:     0.1.0
+bohr_release_url: "https://s3.amazonaws.com/packages.perfect-timing.io/bohr/{{ bohr_version }}/bohr"
+
+bohr_user: bohr
+bohr_group: bohr
+
+bohr_home_dir:    /var/run/bohr
+bohr_bin_dir:     /usr/local/bin
+bohr_log_dir:     /var/log/bohr
+bohr_conf_dir:    /etc/bohr
+
+bohr_state: started
+bohr_enabled: yes
+
+bohr_journals: []
+
+bohr_config: {}
+bohr_logrotate_dir: /etc/logrotate.d

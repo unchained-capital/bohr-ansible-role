@@ -1,0 +1,52 @@
+---
+
+- name: Download and install Bohr binary release
+  get_url: url="{{ bohr_release_url }}" dest="{{ bohr_bin_dir }}/bohr" owner=root group=root mode=0755
+  tags:
+    - bohr
+
+- name: Create Bohr user group
+  group: name="{{ bohr_group}}"
+  tags:
+    - bohr
+
+- name: Create Bohr user
+  user: name="{{ bohr_user}}" home="{{ bohr_home_dir }}" comment="Niels Bohr" group="{{ bohr_group }}" shell=/bin/false
+  tags:
+    - bohr
+    
+- name: Create Bohr configuration directory
+  file: path="{{ bohr_conf_dir }}/conf.d" state=directory owner=root group=root mode=0755
+  tags:
+    - bohr
+    
+- name: Create Bohr log directory
+  file: path="{{ bohr_log_dir }}" state=directory owner="{{ bohr_user }}" group="{{ bohr_group }}" mode=0755
+  tags:
+    - bohr
+
+- name: Create logrotate configuration file
+  template: src=logrotate.j2 dest="{{ bohr_logrotate_dir }}/bohr" owner=root group=root mode=0644
+  tags:
+    - bohr
+    - logrotate
+    
+- name: Create Bohr configuration file
+  template: src=bohr.yml.j2 dest="{{ bohr_conf_dir }}/bohr.yml" owner=root group=root mode=0644
+  notify:
+    - restart bohr
+  tags:
+    - bohr
+
+- name: Create Upstart configuration file
+  when: ansible_os_family == "Debian"
+  template: src=upstart.conf.j2 dest=/etc/init/bohr.conf owner=root group=root mode=0644
+  notify:
+    - restart bohr
+  tags:
+    - bohr
+
+- name: Start Bohr service
+  service: name=bohr state={{bohr_state}} enabled={{ bohr_enabled }}
+  tags:
+    - bohr
