@@ -8,4 +8,7 @@ galaxy_info:
    - name: Ubuntu
      versions:
       - trusty
+  galaxy_tags:
+    - monitoring
+    - server_metrics
 dependencies: []
