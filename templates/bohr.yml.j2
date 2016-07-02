@@ -1,9 +1,17 @@
 ---
 
+# {{ ansible_managed }}
+
 bohr:
+{% if bohr_journals | length == 0 %}
+  journals: []
+{% else %}
   journals:
 {% for journal in bohr_journals %}
     - {{ journal }}
 {% endfor %}
+{% endif %}
 
+{% if bohr_config | length > 0 %}
 {{ bohr_config | to_nice_yaml }}
+{% endif %}
