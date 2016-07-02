@@ -1,7 +1,7 @@
 ---
 
 bohr_version:     0.1.0
-bohr_release_url: "https://s3.amazonaws.com/packages.perfect-timing.io/bohr/{{ bohr_version }}/bohr"
+bohr_release_url: "https://github.com/dhruvbansal/bohr/releases/download/v{{bohr_version}}/bohr"
 
 bohr_user: bohr
 bohr_group: bohr
