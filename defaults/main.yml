@@ -5,6 +5,7 @@ bohr_release_url: "https://github.com/dhruvbansal/bohr/releases/download/v{{bohr
 
 bohr_user: bohr
 bohr_group: bohr
+bohr_runs_as_root: false
 
 bohr_home_dir:    /var/run/bohr
 bohr_bin_dir:     /usr/local/bin

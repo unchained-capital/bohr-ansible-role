@@ -2,13 +2,12 @@
 
 # {{ ansible_managed }}
 
-bohr:
 {% if bohr_journals | length == 0 %}
-  journals: []
+# No journals were configured by Ansible for Bohr.
 {% else %}
-  journals:
+journals:
 {% for journal in bohr_journals %}
-    - {{ journal }}
+  - {{ journal }}
 {% endfor %}
 {% endif %}
 
