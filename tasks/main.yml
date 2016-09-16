@@ -7,11 +7,25 @@
 
 - name: Create Bohr user group
   group: name="{{ bohr_group}}"
+  when: bohr_group_id is not defined
   tags:
     - bohr
 
+- name: Create Bohr user group
+  group: name="{{ bohr_group}}" gid={{ bohr_group_id }}
+  when: bohr_group_id is defined
+  tags:
+    - bohr
+    
 - name: Create Bohr user
+  when: bohr_user_id is not defined
   user: name="{{ bohr_user}}" home="{{ bohr_home_dir }}" comment="Niels Bohr" group="{{ bohr_group }}" shell=/bin/false
+  tags:
+    - bohr
+    
+- name: Create Bohr user
+  when: bohr_user_id is defined
+  user: name="{{ bohr_user}}" home="{{ bohr_home_dir }}" comment="Niels Bohr" group="{{ bohr_group }}" shell=/bin/false uid={{ bohr_user_id }}
   tags:
     - bohr
     
