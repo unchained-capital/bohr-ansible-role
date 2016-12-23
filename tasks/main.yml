@@ -10,40 +10,47 @@
   when: bohr_group_id is not defined
   tags:
     - bohr
+    - groups
 
 - name: Create Bohr user group
   group: name="{{ bohr_group}}" gid={{ bohr_group_id }}
   when: bohr_group_id is defined
   tags:
     - bohr
+    - groups
     
 - name: Create Bohr user
   when: bohr_user_id is not defined
   user: name="{{ bohr_user}}" home="{{ bohr_home_dir }}" comment="Niels Bohr" group="{{ bohr_group }}" shell=/bin/false
   tags:
     - bohr
+    - users
     
 - name: Create Bohr user
   when: bohr_user_id is defined
   user: name="{{ bohr_user}}" home="{{ bohr_home_dir }}" comment="Niels Bohr" group="{{ bohr_group }}" shell=/bin/false uid={{ bohr_user_id }}
   tags:
     - bohr
+    - users
     
 - name: Create Bohr configuration directory
   file: path="{{ bohr_conf_dir }}/conf.d" state=directory owner=root group=root mode=0755
   tags:
     - bohr
+    - dirs
     
 - name: Create Bohr log directory
   file: path="{{ bohr_log_dir }}" state=directory owner="{{ bohr_user }}" group="{{ bohr_group }}" mode=0755
   tags:
     - bohr
+    - dirs
 
 - name: Create logrotate configuration file
   template: src=logrotate.j2 dest="{{ bohr_logrotate_dir }}/bohr" owner=root group=root mode=0644
   tags:
     - bohr
     - logrotate
+    - logs
     
 - name: Create Bohr configuration file
   template: src=bohr.yml.j2 dest="{{ bohr_conf_dir }}/bohr.yml" owner=root group=root mode=0644
@@ -51,6 +58,7 @@
     - restart bohr
   tags:
     - bohr
+    - config
 
 - name: Create Upstart configuration file
   when: ansible_os_family == "Debian"
@@ -59,8 +67,10 @@
     - restart bohr
   tags:
     - bohr
+    - service
 
 - name: Start Bohr service
   service: name=bohr state={{bohr_state}} enabled={{ bohr_enabled }}
   tags:
     - bohr
+    - service
