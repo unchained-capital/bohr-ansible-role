@@ -1,6 +1,6 @@
 ---
 
-bohr_version:     0.2.1
+bohr_version:     0.2.2
 bohr_release_url: "https://github.com/dhruvbansal/bohr/releases/download/v{{bohr_version}}/bohr"
 
 bohr_user: bohr
