@@ -16,5 +16,5 @@ setgid {{ bohr_group }}
 {% endif %}
 
 script
-  {{ bohr_bin_dir }}/bohr --config {{ bohr_conf_dir }}/bohr.yml --config {{ bohr_conf_dir }}/conf.d --periodic >> {{ bohr_log_dir }}/bohr.log 2>&1
+  {{ bohr_bin_dir }}/bohr {{ bohr_conf_dir }}/observers --config {{ bohr_conf_dir }}/bohr.yml --config {{ bohr_conf_dir }}/conf.d --periodic >> {{ bohr_log_dir }}/bohr.log 2>&1
 end script  

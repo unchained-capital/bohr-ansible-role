@@ -39,6 +39,12 @@
     - bohr
     - dirs
     
+- name: Create Bohr observers directory
+  file: path="{{ bohr_conf_dir }}/observers" state=directory owner=root group=root mode=0755
+  tags:
+    - bohr
+    - dirs
+
 - name: Create Bohr log directory
   file: path="{{ bohr_log_dir }}" state=directory owner="{{ bohr_user }}" group="{{ bohr_group }}" mode=0755
   tags:
