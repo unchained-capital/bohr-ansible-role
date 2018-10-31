@@ -1,0 +1,25 @@
+[Unit]
+Description=bohr
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/java -jar {{ bohr_bin_dir }}/bohr {{ bohr_conf_dir }}/observers --config {{bohr_conf_dir }}/bohr.yml --config {{ bohr_conf_dir }}/conf.d --periodic 
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=bohr
+
+{% if not bohr_runs_as_root %}
+User={{ bohr_user }}
+Group={{ bohr_group }}
+{% else %}
+User=root
+Group=root
+{% endif %}
+
+Restart=on-failure
+
+# Specifies which signal to use when killing a service. Defaults to SIGTERM.
+KillSignal=SIGTERM
+
+[Install]
+WantedBy=default.target

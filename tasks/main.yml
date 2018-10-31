@@ -66,14 +66,25 @@
     - bohr
     - config
 
+
+- name: Create Systemd configuration file
+  when: ansible_service_mgr == "systemd"
+  template: src=bohr.service.j2 dest="/etc/systemd/system/bohr.service" owner=root group=root mode=0644
+  notify:
+    - restart bohr
+  tags:
+    - bohr
+    - service
+
 - name: Create Upstart configuration file
-  when: ansible_os_family == "Debian"
+  when: ansible_service_mgr == "upstart"
   template: src=upstart.conf.j2 dest=/etc/init/bohr.conf owner=root group=root mode=0644
   notify:
     - restart bohr
   tags:
     - bohr
     - service
+
 
 - name: Start Bohr service
   service: name=bohr state={{bohr_state}} enabled={{ bohr_enabled }}
